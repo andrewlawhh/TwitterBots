@@ -1,6 +1,5 @@
 [packages]
 tweepy = "*"
-time = "*"
 
 [requires]
 python_version = "3.6"
