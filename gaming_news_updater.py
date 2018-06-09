@@ -28,7 +28,8 @@ followed_accounts = [get_id('E3'),
                             get_id('EpicGames'),
                             get_id('nvidia'),
                             get_id('Ubisoft'),
-                            get_id('EA')
+                            get_id('EA'),
+                            get_id('Naughty_Dog')
                             ]
 
 # Set up stream to retweet
@@ -37,11 +38,16 @@ class GameAccListener(tweepy.StreamListener):
     def on_status(self, status):
         try:
             print('tweet by:', get_name(status.user.id))
+            print('user id:', status.user.id)
             print('tweet text :', status.text)
-            if status.user.id in followed_accounts:
+
+            # followed accounts list contains strings
+            if str(status.user.id) in followed_accounts:
                 print('retweeted tweet by', get_name(status.user.id))
                 api.retweet(status.id)
-            time.sleep(60)
+
+            # loop every 15 seconds
+            time.sleep(15)
         except Exception as e:
             print(e)
         return True
@@ -64,7 +70,7 @@ def main():
     # Stream Filter
     try:
         stream.filter(follow = followed_accounts,
-                      track = ['#E3', '#Fallout76', '#BE3', '#Cyberpunk2077'],
+                      #track = ['#E3', '#Fallout76', '#BE3', '#Cyberpunk2077', '#E32018'],
                       async = True
                       )
     except Exception as e:
